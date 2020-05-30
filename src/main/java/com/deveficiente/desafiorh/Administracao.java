@@ -3,7 +3,6 @@ package com.deveficiente.desafiorh;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +23,7 @@ public class Administracao {
 	private Long id;
 	private @NotBlank String nome;
 	private @NotNull TipoAdm tipo;
-	@OneToMany(mappedBy = "administracao",cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "administracao")
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	private Set<Entidade> entidades = new HashSet<>();
 
@@ -33,9 +32,11 @@ public class Administracao {
 		this.tipo = tipo;
 	}
 
-	public void adicionaEntidade(String nome) {
+	public Entidade adicionaEntidade(String nome) {
 		Assert.isTrue(this.respeitaLimiteDeEntidades(),"Essa administracao nao pode ter outra entidade");
-		this.entidades.add(new Entidade(this,nome));
+		Entidade novaEntidade = new Entidade(this,nome);
+		this.entidades.add(novaEntidade);
+		return novaEntidade;
 	}
 
 	boolean respeitaLimiteDeEntidades() {

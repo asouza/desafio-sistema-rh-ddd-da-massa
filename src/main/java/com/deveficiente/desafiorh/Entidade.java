@@ -20,6 +20,11 @@ public class Entidade {
 	@ManyToOne
 	private @NotNull @Valid Administracao administracao;
 	private @NotBlank String nome;
+	
+	@Deprecated
+	public Entidade() {
+
+	}
 
 	public Entidade(@NotNull @Valid Administracao administracao, @NotBlank String nome) {
 		Assert.isTrue(administracao.respeitaLimiteDeEntidades(),"Não rola criar uma nova entidade para essa administracao");

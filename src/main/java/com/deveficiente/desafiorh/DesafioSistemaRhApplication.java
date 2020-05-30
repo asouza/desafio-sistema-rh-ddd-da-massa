@@ -39,8 +39,18 @@ public class DesafioSistemaRhApplication implements CommandLineRunner{
 		Administracao adm2 = new Administracao("adm2",TipoAdm.indireta);
 		manager.persist(adm2);
 		
-		adm1.adicionaEntidade("entidade1");
-		adm2.adicionaEntidade("entidade2");
+		Entidade entidade1 = adm1.adicionaEntidade("entidade1");
+		manager.persist(entidade1);
+		Entidade entidade2 = adm2.adicionaEntidade("entidade2");
+		manager.persist(entidade2);
+		
+		
+		
+		Vinculo vinculoSeyaEntidde = seya.adicionaVinculo(entidade1);		
+		manager.persist(vinculoSeyaEntidde);
+		Vinculo vinculoYogaEntidade2 = yoga.adicionaVinculo(entidade2);
+		manager.persist(vinculoYogaEntidade2);
+		
 		
 		
 		
