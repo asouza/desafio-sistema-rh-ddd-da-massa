@@ -50,7 +50,7 @@ public class ServidorPublico {
 	}
 
 	boolean temVinculoAtivo(@NotNull @Valid Entidade entidade) {
-		return vinculos.stream().anyMatch(vinculo -> vinculo.pertenceAEntidade(entidade));
+		return vinculos.stream().anyMatch(vinculo -> vinculo.ativoComAEntidade(entidade));
 	}
 
 }

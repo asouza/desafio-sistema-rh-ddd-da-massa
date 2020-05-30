@@ -35,8 +35,8 @@ public class Vinculo {
 		
 	}
 
-	public boolean pertenceAEntidade(@NotNull @Valid Entidade outraEntidade) {
-		return this.entidade.equals(outraEntidade);
+	public boolean ativoComAEntidade(@NotNull @Valid Entidade outraEntidade) {
+		return this.entidade.equals(outraEntidade) && this.ativo;
 	}
 
 	
