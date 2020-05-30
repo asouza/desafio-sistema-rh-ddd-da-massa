@@ -32,6 +32,21 @@ public class DesafioSistemaRhApplication implements CommandLineRunner{
 		manager.persist(marketing);
 		ServidorPublico yoga = new ServidorPublico("yoga",marketing ,Natureza.comissionada);
 		manager.persist(yoga);
+		
+		
+		Administracao adm1 = new Administracao("adm1",TipoAdm.direta);
+		manager.persist(adm1);
+		Administracao adm2 = new Administracao("adm2",TipoAdm.indireta);
+		manager.persist(adm2);
+		
+		adm1.adicionaEntidade("entidade1");
+		adm2.adicionaEntidade("entidade2");
+		
+		
+		
+		
+		
+		
 	}
 
 }
