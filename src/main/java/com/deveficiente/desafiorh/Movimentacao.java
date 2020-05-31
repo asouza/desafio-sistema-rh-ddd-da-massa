@@ -18,22 +18,12 @@ import org.springframework.util.Assert;
 
 public class Movimentacao {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	@ManyToOne
 	private @NotNull @Valid ServidorPublico servidor;
-	@NotNull
-	private Month mes;
-	@Positive
-	private int ano;
 	private Set<Vantagem> vantagens = new HashSet<>();
 
 	public Movimentacao(@NotNull @Valid ServidorPublico servidor) {
 		this.servidor = servidor;
-		YearMonth mesCorrente = YearMonth.now();
-		this.mes = mesCorrente.getMonth();
-		this.ano = mesCorrente.getYear();
 		this.vantagens.add(servidor.lancamentoSalario(this));
 
 		Assert.isTrue(temSalarioAdicionado(),
@@ -44,8 +34,6 @@ public class Movimentacao {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ano;
-		result = prime * result + ((mes == null) ? 0 : mes.hashCode());
 		result = prime * result
 				+ ((servidor == null) ? 0 : servidor.hashCode());
 		return result;
@@ -60,10 +48,6 @@ public class Movimentacao {
 		if (getClass() != obj.getClass())
 			return false;
 		Movimentacao other = (Movimentacao) obj;
-		if (ano != other.ano)
-			return false;
-		if (mes != other.mes)
-			return false;
 		if (servidor == null) {
 			if (other.servidor != null)
 				return false;
@@ -91,6 +75,10 @@ public class Movimentacao {
 	public BigDecimal valorVantagemBruto() {
 		return vantagens.stream().map(Vantagem::getValor).reduce(
 				BigDecimal.ZERO, (atual, proximo) -> atual.add(proximo));
+	}
+
+	public boolean temVinculoAtivo(@NotNull @Valid Entidade entidade) {
+		return this.servidor.temVinculoAtivo(entidade);
 	}
 
 }
