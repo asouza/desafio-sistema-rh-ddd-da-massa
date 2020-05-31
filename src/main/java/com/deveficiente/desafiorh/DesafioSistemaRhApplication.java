@@ -19,6 +19,7 @@ public class DesafioSistemaRhApplication implements CommandLineRunner{
 	
 	@PersistenceContext
 	private EntityManager manager;
+	
 
 	@Override
 	@Transactional

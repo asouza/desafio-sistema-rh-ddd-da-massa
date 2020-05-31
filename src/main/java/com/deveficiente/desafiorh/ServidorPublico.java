@@ -34,6 +34,11 @@ public class ServidorPublico {
 
 	@OneToMany(mappedBy = "servidorPublico")
 	private Set<Vinculo> vinculos = new HashSet<>();
+	
+	@Deprecated
+	public ServidorPublico() {
+
+	}
 
 	public ServidorPublico(@NotBlank String nome, @NotNull @Valid Cargo cargo,
 			@NotNull Natureza natureza) {
@@ -52,5 +57,35 @@ public class ServidorPublico {
 	boolean temVinculoAtivo(@NotNull @Valid Entidade entidade) {
 		return vinculos.stream().anyMatch(vinculo -> vinculo.ativoComAEntidade(entidade));
 	}
+
+	public Vantagem lancamentoSalario(Movimentacao movimentacao) {
+		return cargo.lancamentoSalario(movimentacao);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		//é claro que poderia rolar um cpf aqui para diferenciar os servidores
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ServidorPublico other = (ServidorPublico) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}	
 
 }
