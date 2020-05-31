@@ -25,6 +25,8 @@ public class Vantagem {
 		return valor;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,7 +40,6 @@ public class Vantagem {
 
 	@Override
 	public boolean equals(Object obj) {
-		//TODO será que o criterio de igualdade de uma vantagem é esse mesmo?
 		if (this == obj)
 			return true;
 		if (obj == null)

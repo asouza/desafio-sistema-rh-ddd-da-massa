@@ -23,17 +23,26 @@ public class MovimentacaoTest {
 		seya.adicionaVinculo(entidade1);
 
 	}
+	
+	/*
+	 * uma folha de pagamento é gerada por mês
+	 * toda folha de pagamento pertence a um entidade
+	 * uma folha tem uma movimentacao que pertence a cada servidor
+	 * cada movimentacao tem uma colecao de vantagens
+	 * a vantagem é regular ou complementar
+	 * precisa ter pelo menos uma vantagem regular do tipo salário
+	 * a colecao de processamentos, baseada em todos os tipos de vantagem, calcula o desconto.  
+	 */	
+	
+	/*
+	 * Aqui realmente era melhor eu perguntar mais a rubens. O que realmente representa um
+	 * processamento? Pq no fim parece que precisa ter salário e outras vantagens regulares e pode 
+	 * ou nao ter vantagens complementares(bonus,plr,salários extras...)
+	 */
 
 	@Test
 	@DisplayName("uma movimentacao nao pode ter mais de uma vantagem do tipo salario")
-	void soPodeTerUmaMovimentacaoDeSalario() {
-		/*
-		 * todo mês tem pelo menos uma folha regular a folha regular ter um ou
-		 * mais ou lançamentos um lançamento tem um valor e uma
-		 * natureza(vantagem/desconto) todo mês, na folha regular, precisa ter
-		 * pelo menos um lançamento do tipo salário que é calculado a partir do
-		 * cargo
-		 */
+	void soPodeTerUmaVantagemDeSalario() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			Movimentacao movimentacao = new Movimentacao(seya);
 			movimentacao.adicionaVantagem(
@@ -51,13 +60,18 @@ public class MovimentacaoTest {
 		Assertions.assertEquals(new BigDecimal("7010"),
 				movimentacao.valorVantagemBruto());
 	}
-
+	
 	@Test
-	@DisplayName("nao pode ter movimentacao para servidor inativo")
-	void naoPodeTerMovimentacaoParaServidorInativo() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Movimentacao(seya);
-		});
+	@DisplayName("calcular total de vantagens bruta de uma movimentacao com vantagens complementares")
+	void calculaVantagemBrutaDeUmaMovimentacaoComVantagemComplementar() {
+		Movimentacao movimentacao = new Movimentacao(seya);
+		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.refeicao,
+				BigDecimal.TEN, movimentacao));
+		
+		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.bonus,
+				new BigDecimal("1000"), movimentacao));
+		Assertions.assertEquals(new BigDecimal("8010"),
+				movimentacao.valorVantagemBruto());
 	}
 
 }

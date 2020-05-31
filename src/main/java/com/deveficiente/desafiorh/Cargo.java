@@ -18,7 +18,7 @@ public class Cargo {
 	private Long id;
 	private @NotBlank String nome;
 	private @Positive @NotNull BigDecimal salario;
-	
+
 	@Deprecated
 	public Cargo() {
 
@@ -30,7 +30,8 @@ public class Cargo {
 	}
 
 	public Vantagem lancamentoSalario(Movimentacao movimentacao) {
-		return new Vantagem(NaturezaVantagem.salario_cargo,salario,movimentacao);
+		return new Vantagem(NaturezaVantagem.salario_cargo, salario,
+				movimentacao);
 	}
 
 }
