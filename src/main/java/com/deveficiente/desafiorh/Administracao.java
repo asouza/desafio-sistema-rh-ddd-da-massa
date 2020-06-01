@@ -34,8 +34,13 @@ public class Administracao {
 
 	public Entidade adicionaEntidade(String nome) {
 		Assert.isTrue(this.respeitaLimiteDeEntidades(),"Essa administracao nao pode ter outra entidade");
+		
 		Entidade novaEntidade = new Entidade(this,nome);
 		this.entidades.add(novaEntidade);
+		
+		//esse daqui é um código que parece bobo, mas é legal. Se não tivesse isso aqui, como seria seu teste de unidade?
+		//claro que uma opção era não ter, eu não te julgaria. Mas aqui a gente garante as restrições de entrada e saída do método
+		Assert.isTrue(this.entidades.contains(novaEntidade),"Deveria ter a entidade "+nome+" adicionada");
 		return novaEntidade;
 	}
 
@@ -46,5 +51,32 @@ public class Administracao {
 		
 		return true;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Administracao other = (Administracao) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+	
+	
 
 }
