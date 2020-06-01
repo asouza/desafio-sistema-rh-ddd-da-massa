@@ -3,7 +3,12 @@ package com.deveficiente.desafiorh;
 import java.math.BigDecimal;
 import java.util.function.Function;
 
-public class ContribuicaoPrevidenciaria implements Function<BigDecimal, BigDecimal>{
+public class ContribuicaoPrevidenciaria {
+	/*
+	 * Aqui poderia ser uma interface e cada faixa poderia ser uma implementação. 
+	 * Daria para compor todas elas e tal... só que essa regra não muda muito...
+	 * Pq eu vou generalizar? 	
+	 */
 
 	public static final BigDecimal multiplicadorFaixa1 = new BigDecimal("0.075");
 	public static final BigDecimal multiplicadorFaixa2 = new BigDecimal("0.09");
@@ -21,7 +26,7 @@ public class ContribuicaoPrevidenciaria implements Function<BigDecimal, BigDecim
 	public static final  BigDecimal aliquotaFixa4 = new BigDecimal("713.09");
 	
 	
-	public BigDecimal apply(BigDecimal valor) {
+	public BigDecimal aplica(BigDecimal valor) {
 		/*
 		 * 6.101,06
 		 * 

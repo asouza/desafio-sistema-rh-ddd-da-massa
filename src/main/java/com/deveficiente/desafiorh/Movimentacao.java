@@ -66,23 +66,35 @@ public class Movimentacao {
 		return this.vantagens.stream().anyMatch(vantagemAtual -> vantagemAtual
 				.ehDaMesmaNatureza(NaturezaVantagem.salario_cargo));
 	}
-	
+
 	public BigDecimal valorVantagemBruto() {
 		return vantagens.stream().map(Vantagem::getValor).reduce(
 				BigDecimal.ZERO, (atual, proximo) -> atual.add(proximo));
 	}
-	
-	public BigDecimal desconto(Function<BigDecimal, BigDecimal> funcaoDeDesconto) {
-		/*
-		 * DUVIDA:este código deve ficar aqui?
-		 * digo, eu misturo estado interno do objeto com um parametro. 
-		 * Por outro lado é um método que não precisa de teste... Já que a logica ta na funcao
-		 */
-		return funcaoDeDesconto.apply(valorVantagemBruto());
+
+	private BigDecimal valorVantagemBruto(NaturezaVantagem naturezaVantagem) {
+		return vantagens.stream().filter(
+				vantagem -> vantagem.ehDaMesmaNatureza(naturezaVantagem))
+				.map(Vantagem::getValor).reduce(BigDecimal.ZERO,
+						(atual, proximo) -> atual.add(proximo));
+		// TODO tem que fazer alguem checagem de estado final? só pode ter uma
+		// vantagem por tipo?
 	}
 
 	public boolean temVinculoAtivo(@NotNull @Valid Entidade entidade) {
 		return this.servidor.temVinculoAtivo(entidade);
+	}
+
+	public BigDecimal calculaInss(ContribuicaoPrevidenciaria inss) {
+		return inss.aplica(valorVantagemBruto(NaturezaVantagem.salario_cargo));
+	}
+
+	public BigDecimal calculaImpostoRenda(ContribuicaoPrevidenciaria inss,
+			ImpostoRenda impostoRenda) {
+		BigDecimal valorInss = calculaInss(inss);
+		BigDecimal valorASerTaxado = valorVantagemBruto(
+				NaturezaVantagem.salario_cargo).subtract(valorInss);
+		return impostoRenda.aplica(valorASerTaxado);
 	}
 
 }

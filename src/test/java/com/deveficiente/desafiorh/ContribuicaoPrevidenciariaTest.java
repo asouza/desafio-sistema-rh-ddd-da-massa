@@ -18,7 +18,7 @@ public class ContribuicaoPrevidenciariaTest {
 		
 		String[] entradaSaida = entradaSaidaSeparadaPorVirgula.split(",");
 		BigDecimal entrada = new BigDecimal(entradaSaida[0]);
-		BigDecimal resultado = new ContribuicaoPrevidenciaria().apply(entrada);
+		BigDecimal resultado = new ContribuicaoPrevidenciaria().aplica(entrada);
 
 		BigDecimal saidaEsperada = new BigDecimal(entradaSaida[1]);
 		MatcherAssert.assertThat(saidaEsperada,Matchers.closeTo(resultado,new BigDecimal("0.01")));

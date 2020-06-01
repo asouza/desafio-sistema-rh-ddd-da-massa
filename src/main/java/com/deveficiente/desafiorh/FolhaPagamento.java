@@ -19,11 +19,7 @@ import org.springframework.util.Assert;
 
 public class FolhaPagamento {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@ManyToOne
-	private @NotNull @Valid Entidade entidade;
+	private Entidade entidade;
 	private Month mes;
 	private int ano;
 
@@ -85,6 +81,13 @@ public class FolhaPagamento {
 		return this.movimentacoes.stream().map(Movimentacao::valorVantagemBruto)
 				.reduce(BigDecimal.ZERO,
 						(atual, proximo) -> atual.add(proximo));
+	}
+
+	public Set<Recibo> recibos(ContribuicaoPrevidenciaria inss,
+			ImpostoRenda impostoRenda) {
+		return movimentacoes.stream().map(
+				movimentacao -> new Recibo(movimentacao, inss, impostoRenda))
+				.collect(Collectors.toSet());
 	}
 
 }
