@@ -3,7 +3,7 @@ package com.deveficiente.desafiorh;
 import java.math.BigDecimal;
 import java.util.function.Function;
 
-public class ContribuicaoPrevidenciaria {
+public class ContribuicaoPrevidenciaria implements Desconto{
 	/*
 	 * Aqui poderia ser uma interface e cada faixa poderia ser uma implementação. 
 	 * Daria para compor todas elas e tal... só que essa regra não muda muito...
@@ -26,7 +26,7 @@ public class ContribuicaoPrevidenciaria {
 	public static final  BigDecimal aliquotaFixa4 = new BigDecimal("713.09");
 	
 	
-	public BigDecimal aplica(BigDecimal valor) {
+	public BigDecimal aplica(Movimentacao movimentacao) {
 		/*
 		 * 6.101,06
 		 * 
@@ -37,6 +37,8 @@ public class ContribuicaoPrevidenciaria {
 		 * 
 		 * 
 		 */
+		
+		BigDecimal valor = movimentacao.valorVantagemBruto(NaturezaVantagem.salario_cargo);
 
 		if (valor.compareTo(tetoFaixa1) <= 0) {
 			return valor.multiply(multiplicadorFaixa1);

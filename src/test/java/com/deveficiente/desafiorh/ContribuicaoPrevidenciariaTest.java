@@ -15,10 +15,25 @@ public class ContribuicaoPrevidenciariaTest {
 			"3000,281.63", "5000,558.94", "10000,713.09" })
 	public void testaCalculo(String entradaSaidaSeparadaPorVirgula) {
 		
-		
 		String[] entradaSaida = entradaSaidaSeparadaPorVirgula.split(",");
 		BigDecimal entrada = new BigDecimal(entradaSaida[0]);
-		BigDecimal resultado = new ContribuicaoPrevidenciaria().aplica(entrada);
+		
+		Cargo programador = new Cargo("programador", entrada);
+		ServidorPublico seya = new ServidorPublico("seya", programador, Natureza.estatutaria);
+
+		Administracao adm1 = new Administracao("adm1", TipoAdm.direta);
+
+		Entidade entidade1 = adm1.adicionaEntidade("entidade1");
+
+		seya.adicionaVinculo(entidade1);
+		
+		Movimentacao movimentacao = new Movimentacao(seya);		
+		
+		
+		
+		
+		
+		BigDecimal resultado = new ContribuicaoPrevidenciaria().aplica(movimentacao);
 
 		BigDecimal saidaEsperada = new BigDecimal(entradaSaida[1]);
 		MatcherAssert.assertThat(saidaEsperada,Matchers.closeTo(resultado,new BigDecimal("0.01")));

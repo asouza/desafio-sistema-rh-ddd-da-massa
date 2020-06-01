@@ -55,8 +55,10 @@ public class MovimentacaoTest {
 	void calculaVantagemBrutaDeUmaMovimentacao() {		
 		Movimentacao movimentacao = new Movimentacao(seya);
 		movimentacao.adicionaVantagem(BigDecimal.TEN,NaturezaVantagem.refeicao);
-		Assertions.assertEquals(new BigDecimal("7010"),
-				movimentacao.valorVantagemBruto());		
+		Assertions.assertEquals(new BigDecimal("7000"),
+				movimentacao.valorVantagemBruto(NaturezaVantagem.salario_cargo));		
+		Assertions.assertEquals(BigDecimal.TEN,
+				movimentacao.valorVantagemBruto(NaturezaVantagem.refeicao));		
 	}
 	
 	@Test
@@ -68,8 +70,12 @@ public class MovimentacaoTest {
 		movimentacao.adicionaVantagem(new BigDecimal("1000"),NaturezaVantagem.bonus);
 		
 		
-		Assertions.assertEquals(new BigDecimal("8010"),
-				movimentacao.valorVantagemBruto());
+		Assertions.assertEquals(new BigDecimal("7000"),
+				movimentacao.valorVantagemBruto(NaturezaVantagem.salario_cargo));		
+		Assertions.assertEquals(BigDecimal.TEN,
+				movimentacao.valorVantagemBruto(NaturezaVantagem.refeicao));
+		Assertions.assertEquals(new BigDecimal("1000"),
+				movimentacao.valorVantagemBruto(NaturezaVantagem.bonus));
 	}
 
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -51,11 +52,11 @@ public class Movimentacao {
 		return true;
 	}
 
-	public void adicionaVantagem(BigDecimal valor, NaturezaVantagem naturezaVantagem) {
+	public void adicionaVantagem(BigDecimal valor,
+			NaturezaVantagem naturezaVantagem) {
 		Assert.isTrue(temSalarioAdicionado(),
 				"Sempre deveria ter pelo menos o salário adicionado");
-		Assert.isTrue(
-				!naturezaVantagem.equals(NaturezaVantagem.salario_cargo),
+		Assert.isTrue(!naturezaVantagem.equals(NaturezaVantagem.salario_cargo),
 				"Não pode adicionar salario, isso já existe");
 
 		this.vantagens.add(new Vantagem(naturezaVantagem, valor, this));
@@ -67,12 +68,7 @@ public class Movimentacao {
 				.ehDaMesmaNatureza(NaturezaVantagem.salario_cargo));
 	}
 
-	public BigDecimal valorVantagemBruto() {
-		return vantagens.stream().map(Vantagem::getValor).reduce(
-				BigDecimal.ZERO, (atual, proximo) -> atual.add(proximo));
-	}
-
-	private BigDecimal valorVantagemBruto(NaturezaVantagem naturezaVantagem) {
+	public BigDecimal valorVantagemBruto(NaturezaVantagem naturezaVantagem) {
 		return vantagens.stream().filter(
 				vantagem -> vantagem.ehDaMesmaNatureza(naturezaVantagem))
 				.map(Vantagem::getValor).reduce(BigDecimal.ZERO,
@@ -85,16 +81,9 @@ public class Movimentacao {
 		return this.servidor.temVinculoAtivo(entidade);
 	}
 
-	public BigDecimal calculaInss(ContribuicaoPrevidenciaria inss) {
-		return inss.aplica(valorVantagemBruto(NaturezaVantagem.salario_cargo));
-	}
-
-	public BigDecimal calculaImpostoRenda(ContribuicaoPrevidenciaria inss,
-			ImpostoRenda impostoRenda) {
-		BigDecimal valorInss = calculaInss(inss);
-		BigDecimal valorASerTaxado = valorVantagemBruto(
-				NaturezaVantagem.salario_cargo).subtract(valorInss);
-		return impostoRenda.aplica(valorASerTaxado);
+	public Set<BigDecimal> calculaDescontos(Set<Desconto> descontos) {
+		return descontos.stream().map(desconto -> desconto.aplica(this))
+				.collect(Collectors.toSet());
 	}
 
 }

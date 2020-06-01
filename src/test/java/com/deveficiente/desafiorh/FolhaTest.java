@@ -33,7 +33,7 @@ public class FolhaTest {
 		
 		folhaPagamento.adicionaMovimentacao(movimentacao);
 		
-		Assertions.assertEquals(new BigDecimal("7000"), folhaPagamento.valorVantagensBruto());
+		Assertions.assertEquals(new BigDecimal("7000"), folhaPagamento.salarioBrutoTotal());
 		
 	}
 	
@@ -57,7 +57,7 @@ public class FolhaTest {
 		Movimentacao movimentacaoYoga = new Movimentacao(yoga);
 		folhaPagamento.adicionaMovimentacao(movimentacaoYoga);
 		
-		Assertions.assertEquals(new BigDecimal("14000"), folhaPagamento.valorVantagensBruto());
+		Assertions.assertEquals(new BigDecimal("14000"), folhaPagamento.salarioBrutoTotal());
 		
 	}
 }

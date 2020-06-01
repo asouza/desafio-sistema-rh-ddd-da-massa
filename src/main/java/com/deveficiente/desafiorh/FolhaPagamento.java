@@ -75,10 +75,10 @@ public class FolhaPagamento {
 
 	}
 
-	public BigDecimal valorVantagensBruto() {
+	public BigDecimal salarioBrutoTotal() {
 		Assert.isTrue(!this.movimentacoes.isEmpty(),
 				"precisa ter adicionado movimentacao para saber o valor bruto");
-		return this.movimentacoes.stream().map(Movimentacao::valorVantagemBruto)
+		return this.movimentacoes.stream().map(movimentacao -> movimentacao.valorVantagemBruto(NaturezaVantagem.bonus.salario_cargo))
 				.reduce(BigDecimal.ZERO,
 						(atual, proximo) -> atual.add(proximo));
 	}
