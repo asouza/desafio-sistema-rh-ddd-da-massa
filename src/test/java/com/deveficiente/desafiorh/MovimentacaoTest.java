@@ -55,11 +55,11 @@ public class MovimentacaoTest {
 	@Test
 	@DisplayName("calcular total de vantagens bruta de uma movimentacao")
 	void calculaVantagemBrutaDeUmaMovimentacao() {		
-		Movimentacao movimentacao = new Movimentacao(seya,Set.of(new ContribuicaoPrevidenciaria()));
+		Movimentacao movimentacao = new Movimentacao(seya);
 		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.refeicao,
 				BigDecimal.TEN, movimentacao));
 		Assertions.assertEquals(new BigDecimal("7010"),
-				movimentacao.valorVantagemBruto());
+				movimentacao.valorVantagemBruto());		
 	}
 	
 	@Test

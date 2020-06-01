@@ -1,25 +1,27 @@
 package com.deveficiente.desafiorh;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
-public class ContribuicaoPrevidenciaria implements DescontoPagamento {
+public class ContribuicaoPrevidenciaria implements Function<BigDecimal, BigDecimal>{
 
-	private final BigDecimal multiplicadorFaixa1 = new BigDecimal("0.075");
-	private final BigDecimal multiplicadorFaixa2 = new BigDecimal("0.09");
-	private final BigDecimal multiplicadorFaixa3 = new BigDecimal("0.12");
-	private final BigDecimal multiplicadorFaixa4 = new BigDecimal("0.14");
-	private final BigDecimal tetoFaixa1 = new BigDecimal("1045");
-	private final BigDecimal tetoFaixa2 = new BigDecimal("2089.60");
-	private final BigDecimal tetoFaixa3 = new BigDecimal("3134.40");
-	private final BigDecimal tetoFaixa4 = new BigDecimal("6101.06");
-	private final BigDecimal aliquotaFixa1 = tetoFaixa1.multiply(multiplicadorFaixa1);
-	private final BigDecimal aliquotaFixa2 = tetoFaixa2.subtract(tetoFaixa1)
+	public static final BigDecimal multiplicadorFaixa1 = new BigDecimal("0.075");
+	public static final BigDecimal multiplicadorFaixa2 = new BigDecimal("0.09");
+	public static final BigDecimal multiplicadorFaixa3 = new BigDecimal("0.12");
+	public static final BigDecimal multiplicadorFaixa4 = new BigDecimal("0.14");
+	public static final BigDecimal tetoFaixa1 = new BigDecimal("1045");
+	public static final BigDecimal tetoFaixa2 = new BigDecimal("2089.60");
+	public static final BigDecimal tetoFaixa3 = new BigDecimal("3134.40");
+	public static final BigDecimal tetoFaixa4 = new BigDecimal("6101.06");
+	public static final BigDecimal aliquotaFixa1 = tetoFaixa1.multiply(multiplicadorFaixa1);
+	public static final BigDecimal aliquotaFixa2 = tetoFaixa2.subtract(tetoFaixa1)
 			.multiply(multiplicadorFaixa2);
-	private BigDecimal aliquotaFixa3 = tetoFaixa3.subtract(tetoFaixa2)
+	public static final  BigDecimal aliquotaFixa3 = tetoFaixa3.subtract(tetoFaixa2)
 			.multiply(multiplicadorFaixa3);	
+	public static final  BigDecimal aliquotaFixa4 = new BigDecimal("713.09");
 	
 	
-	public BigDecimal calcula(BigDecimal valor) {
+	public BigDecimal apply(BigDecimal valor) {
 		/*
 		 * 6.101,06
 		 * 

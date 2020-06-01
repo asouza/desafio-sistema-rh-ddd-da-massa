@@ -3,6 +3,7 @@ package com.deveficiente.desafiorh;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
@@ -65,10 +66,19 @@ public class Movimentacao {
 		return this.vantagens.stream().anyMatch(vantagemAtual -> vantagemAtual
 				.ehDaMesmaNatureza(NaturezaVantagem.salario_cargo));
 	}
-
+	
 	public BigDecimal valorVantagemBruto() {
 		return vantagens.stream().map(Vantagem::getValor).reduce(
 				BigDecimal.ZERO, (atual, proximo) -> atual.add(proximo));
+	}
+	
+	public BigDecimal desconto(Function<BigDecimal, BigDecimal> funcaoDeDesconto) {
+		/*
+		 * DUVIDA:este código deve ficar aqui?
+		 * digo, eu misturo estado interno do objeto com um parametro. 
+		 * Por outro lado é um método que não precisa de teste... Já que a logica ta na funcao
+		 */
+		return funcaoDeDesconto.apply(valorVantagemBruto());
 	}
 
 	public boolean temVinculoAtivo(@NotNull @Valid Entidade entidade) {
