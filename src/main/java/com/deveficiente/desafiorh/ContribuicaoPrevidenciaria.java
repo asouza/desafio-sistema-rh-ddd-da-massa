@@ -1,8 +1,6 @@
 package com.deveficiente.desafiorh;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 public class ContribuicaoPrevidenciaria {
 
@@ -14,6 +12,11 @@ public class ContribuicaoPrevidenciaria {
 	private final BigDecimal tetoFaixa2 = new BigDecimal("2089.60");
 	private final BigDecimal tetoFaixa3 = new BigDecimal("3134.40");
 	private final BigDecimal tetoFaixa4 = new BigDecimal("6101.06");
+	private final BigDecimal aliquotaFixa1 = tetoFaixa1.multiply(multiplicadorFaixa1);
+	private final BigDecimal aliquotaFixa2 = tetoFaixa2.subtract(tetoFaixa1)
+			.multiply(multiplicadorFaixa2);
+	private BigDecimal aliquotaFixa3 = tetoFaixa3.subtract(tetoFaixa2)
+			.multiply(multiplicadorFaixa3);	
 	
 	
 	
@@ -36,34 +39,25 @@ public class ContribuicaoPrevidenciaria {
 		}
 		
 		if (valor.compareTo(tetoFaixa2) <= 0) {
-			BigDecimal aliquota1 = tetoFaixa1.multiply(multiplicadorFaixa1);
 			BigDecimal sobraParaAplicarAliquota2 = valor.subtract(tetoFaixa1);
 			BigDecimal aliquota2 = sobraParaAplicarAliquota2
 					.multiply(multiplicadorFaixa2);
-			return aliquota1.add(aliquota2);
+			return aliquotaFixa1.add(aliquota2);
 
 		}
 
 		if (valor.compareTo(tetoFaixa3) <= 0) {
-			BigDecimal aliquota1 = tetoFaixa1.multiply(multiplicadorFaixa1);
-			BigDecimal aliquota2 = tetoFaixa2.subtract(tetoFaixa1)
-					.multiply(multiplicadorFaixa2);
 			BigDecimal sobraParaAplicarAliquota3 = valor.subtract(tetoFaixa2);
 			BigDecimal aliquota3 = sobraParaAplicarAliquota3
 					.multiply(multiplicadorFaixa3);
-			return aliquota1.add(aliquota2).add(aliquota3);
+			return aliquotaFixa1.add(aliquotaFixa2).add(aliquota3);
 		}
 
 		if (valor.compareTo(tetoFaixa4) <= 0) {
-			BigDecimal aliquota1 = tetoFaixa1.multiply(multiplicadorFaixa1);
-			BigDecimal aliquota2 = tetoFaixa2.subtract(tetoFaixa1)
-					.multiply(multiplicadorFaixa2);
-			BigDecimal aliquota3 = tetoFaixa3.subtract(tetoFaixa2)
-					.multiply(multiplicadorFaixa3);
 			BigDecimal sobraParaAplicarAliquota4 = valor.subtract(tetoFaixa3);
 			BigDecimal aliquota4 = sobraParaAplicarAliquota4
 					.multiply(multiplicadorFaixa4);
-			return aliquota1.add(aliquota2).add(aliquota3).add(aliquota4);
+			return aliquotaFixa1.add(aliquotaFixa2).add(aliquotaFixa3).add(aliquota4);
 		}
 
 		//tem salario maior que a faixa 4
