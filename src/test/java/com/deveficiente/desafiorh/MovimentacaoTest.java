@@ -1,6 +1,7 @@
 package com.deveficiente.desafiorh;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,8 +54,8 @@ public class MovimentacaoTest {
 
 	@Test
 	@DisplayName("calcular total de vantagens bruta de uma movimentacao")
-	void calculaVantagemBrutaDeUmaMovimentacao() {
-		Movimentacao movimentacao = new Movimentacao(seya);
+	void calculaVantagemBrutaDeUmaMovimentacao() {		
+		Movimentacao movimentacao = new Movimentacao(seya,Set.of(new ContribuicaoPrevidenciaria()));
 		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.refeicao,
 				BigDecimal.TEN, movimentacao));
 		Assertions.assertEquals(new BigDecimal("7010"),
