@@ -49,8 +49,11 @@ public class ServidorPublico {
 
 	public Vinculo adicionaVinculo(Entidade entidade) {
 		Assert.isTrue(!this.temVinculoAtivo(entidade),"Este vinculo nao pode ser criado dado que o servidor ja tem vinculo ativo com a entidade");
+		
 		Vinculo novoVinculo = new Vinculo(this,entidade);
 		this.vinculos.add(novoVinculo);
+		
+		Assert.isTrue(this.vinculos.contains(novoVinculo),"O servidor deveria ter o novo vinculo adicionado "+novoVinculo);
 		return novoVinculo;
 	}
 
