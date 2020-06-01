@@ -51,14 +51,14 @@ public class Movimentacao {
 		return true;
 	}
 
-	public void adicionaVantagem(Vantagem vantagem) {
+	public void adicionaVantagem(BigDecimal valor, NaturezaVantagem naturezaVantagem) {
 		Assert.isTrue(temSalarioAdicionado(),
 				"Sempre deveria ter pelo menos o salário adicionado");
 		Assert.isTrue(
-				!vantagem.ehDaMesmaNatureza(NaturezaVantagem.salario_cargo),
+				!naturezaVantagem.equals(NaturezaVantagem.salario_cargo),
 				"Não pode adicionar salario, isso já existe");
 
-		this.vantagens.add(vantagem);
+		this.vantagens.add(new Vantagem(naturezaVantagem, valor, this));
 
 	}
 

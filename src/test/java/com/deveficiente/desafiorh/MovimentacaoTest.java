@@ -46,9 +46,7 @@ public class MovimentacaoTest {
 	void soPodeTerUmaVantagemDeSalario() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			Movimentacao movimentacao = new Movimentacao(seya);
-			movimentacao.adicionaVantagem(
-					new Vantagem(NaturezaVantagem.salario_cargo, BigDecimal.TEN,
-							movimentacao));
+			movimentacao.adicionaVantagem(BigDecimal.TEN,NaturezaVantagem.salario_cargo);
 		});
 	}
 
@@ -56,8 +54,7 @@ public class MovimentacaoTest {
 	@DisplayName("calcular total de vantagens bruta de uma movimentacao")
 	void calculaVantagemBrutaDeUmaMovimentacao() {		
 		Movimentacao movimentacao = new Movimentacao(seya);
-		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.refeicao,
-				BigDecimal.TEN, movimentacao));
+		movimentacao.adicionaVantagem(BigDecimal.TEN,NaturezaVantagem.refeicao);
 		Assertions.assertEquals(new BigDecimal("7010"),
 				movimentacao.valorVantagemBruto());		
 	}
@@ -66,11 +63,11 @@ public class MovimentacaoTest {
 	@DisplayName("calcular total de vantagens bruta de uma movimentacao com vantagens complementares")
 	void calculaVantagemBrutaDeUmaMovimentacaoComVantagemComplementar() {
 		Movimentacao movimentacao = new Movimentacao(seya);
-		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.refeicao,
-				BigDecimal.TEN, movimentacao));
+		movimentacao.adicionaVantagem(BigDecimal.TEN,NaturezaVantagem.refeicao);
 		
-		movimentacao.adicionaVantagem(new Vantagem(NaturezaVantagem.bonus,
-				new BigDecimal("1000"), movimentacao));
+		movimentacao.adicionaVantagem(new BigDecimal("1000"),NaturezaVantagem.bonus);
+		
+		
 		Assertions.assertEquals(new BigDecimal("8010"),
 				movimentacao.valorVantagemBruto());
 	}

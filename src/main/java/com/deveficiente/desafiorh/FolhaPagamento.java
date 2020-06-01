@@ -83,11 +83,4 @@ public class FolhaPagamento {
 						(atual, proximo) -> atual.add(proximo));
 	}
 
-	public Set<Recibo> recibos(ContribuicaoPrevidenciaria inss,
-			ImpostoRenda impostoRenda) {
-		return movimentacoes.stream().map(
-				movimentacao -> new Recibo(movimentacao, inss, impostoRenda))
-				.collect(Collectors.toSet());
-	}
-
 }
