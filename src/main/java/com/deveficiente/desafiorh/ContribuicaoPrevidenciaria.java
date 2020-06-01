@@ -2,7 +2,7 @@ package com.deveficiente.desafiorh;
 
 import java.math.BigDecimal;
 
-public class ContribuicaoPrevidenciaria {
+public class ContribuicaoPrevidenciaria implements DescontoPagamento {
 
 	private final BigDecimal multiplicadorFaixa1 = new BigDecimal("0.075");
 	private final BigDecimal multiplicadorFaixa2 = new BigDecimal("0.09");
@@ -19,9 +19,6 @@ public class ContribuicaoPrevidenciaria {
 			.multiply(multiplicadorFaixa3);	
 	
 	
-	
-	//private BigDecimal duasCasasDecimais()
-
 	public BigDecimal calcula(BigDecimal valor) {
 		/*
 		 * 6.101,06
