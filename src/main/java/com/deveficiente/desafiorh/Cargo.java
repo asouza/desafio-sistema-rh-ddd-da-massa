@@ -19,9 +19,19 @@ public class Cargo {
 	private @NotBlank String nome;
 	private @Positive @NotNull BigDecimal salario;
 
+	@Deprecated
+	public Cargo() {
+
+	}
+
 	public Cargo(@NotBlank String nome, @Positive @NotNull BigDecimal salario) {
 		this.nome = nome;
 		this.salario = salario;
+	}
+
+	public Vantagem lancamentoSalario(Movimentacao movimentacao) {
+		return new Vantagem(NaturezaVantagem.salario_cargo, salario,
+				movimentacao);
 	}
 
 }
